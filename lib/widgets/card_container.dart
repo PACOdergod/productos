@@ -111,7 +111,7 @@ class _LoginForm extends StatelessWidget {
 
                 FocusScope.of(context).unfocus();
 
-                if (!provider.isValidForm()) return;
+                // TODO: if (!provider.isValidForm()) return;
 
                 Navigator.pushReplacementNamed(context, 'loading');
               } 

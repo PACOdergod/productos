@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Productos',
       
-      initialRoute: 'login',
+      initialRoute: 'home',
       routes: {
         'login': (_)=> LoginPage(),
         'home':  (_)=> HomePage(),
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyThemeData {
+
   static ThemeData principal()=> 
   ThemeData(
     scaffoldBackgroundColor: Colors.grey.shade300,
