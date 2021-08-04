@@ -32,7 +32,12 @@ class MyThemeData {
       primaryVariant: Colors.green.shade300,
     ),
     
-    primaryColor: Colors.green
+    primaryColor: Colors.green,
+
+    appBarTheme: AppBarTheme(
+      elevation: 0,
+      color: Colors.teal
+    )
   );
 
 }
