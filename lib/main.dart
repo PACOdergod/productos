@@ -31,12 +31,15 @@ class MyThemeData {
       primary: Colors.green,
       primaryVariant: Colors.green.shade300,
     ),
-    
     primaryColor: Colors.green,
 
     appBarTheme: AppBarTheme(
       elevation: 0,
       color: Colors.teal
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Colors.pink,
+      elevation: 0
     )
   );
 
