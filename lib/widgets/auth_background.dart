@@ -12,9 +12,9 @@ class AuthBackground extends StatelessWidget {
       child: Stack(
         children: [
 
-          _BoxMorado(),
+          _BoxColor(),
 
-          SafeArea( child: _icono() ),
+          SafeArea( child: _icono(context) ),
 
         ],
       ),
@@ -22,16 +22,20 @@ class AuthBackground extends StatelessWidget {
     );
   }
 
-  Container _icono() {
+  Container _icono(BuildContext context) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(top: 30),
-      child: Icon( Icons.person_pin, color: Colors.white, size: 100,),
+      child: Icon( 
+        Icons.person_pin, 
+        color: Theme.of(context).colorScheme.surface,
+        size: 100,
+      ),
     );
   }
 }
 
-class _BoxMorado extends StatelessWidget {
+class _BoxColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +43,7 @@ class _BoxMorado extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     var boxDecoration = BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          Color.fromRGBO(63, 63, 156, 1),
-          Color.fromRGBO(90, 70, 178, 1)
-        ]
-      )
+      color: Theme.of(context).colorScheme.primary
     );
 
     return Container(
@@ -54,10 +53,10 @@ class _BoxMorado extends StatelessWidget {
 
       child: Stack(
         children: [
-          Positioned(child: circulo(), top: 100, left: 10,),
-          Positioned(child: circulo(), top: 10, left: 100,),
-          Positioned(child: circulo(), top: -10, right: -30,),
-          Positioned(child: circulo(), bottom: -30, right: -10,),
+          Positioned(child: circulo(context), top: 100, left: 10,),
+          Positioned(child: circulo(context), top: 10, left: 100,),
+          Positioned(child: circulo(context), top: -10, right: -30,),
+          Positioned(child: circulo(context), bottom: -30, right: -10,),
           
         ],
       ),
@@ -65,12 +64,12 @@ class _BoxMorado extends StatelessWidget {
     );
   }
 
-  Container circulo()=> Container(
+  Container circulo(BuildContext context)=> Container(
     width: 100,
     height: 100,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(100),
-      color: Color.fromRGBO(255, 255, 255, 0.05)
+      color: Theme.of(context).colorScheme.primaryVariant
     ),
   );
 

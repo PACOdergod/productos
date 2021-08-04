@@ -13,7 +13,7 @@ class CardContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(20),
-      decoration: boxDeco(),
+      decoration: boxDeco(context),
 
       child: Column(
         children: [
@@ -33,8 +33,8 @@ class CardContainer extends StatelessWidget {
     );
   }
 
-  BoxDecoration boxDeco()=> BoxDecoration(
-    color: Colors.white,
+  BoxDecoration boxDeco(BuildContext context)=> BoxDecoration(
+    color: Theme.of(context).colorScheme.surface,
     borderRadius: BorderRadius.circular(25),
     boxShadow: [
       BoxShadow(
@@ -55,7 +55,6 @@ class _LoginForm extends StatelessWidget {
 
     return Container(
       child: Form(
-        //TODO: mantener la referencia al key
         key: provider.globalKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
 
@@ -65,7 +64,7 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.loginInputMail(),
+              decoration: InputDecorations.loginInputMail(context),
 
               onChanged: ( value )=> provider.email= value,
 
@@ -84,7 +83,7 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               obscureText: true,
-              decoration: InputDecorations.loginInputPass(),
+              decoration: InputDecorations.loginInputPass(context),
               onChanged: ( value )=> provider.password = value,
 
               validator: (value){
@@ -102,7 +101,7 @@ class _LoginForm extends StatelessWidget {
               ),
               disabledColor: Colors.grey,
               elevation: 0,
-              color: Colors.purple,
+              color: Theme.of(context).colorScheme.primary,
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 80),
                 child: Text('Ingresar', style: TextStyle(color: Colors.white)),

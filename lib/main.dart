@@ -16,9 +16,22 @@ class MyApp extends StatelessWidget {
         'loading': (_)=> LoadingPage()
       },
 
-      theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: Colors.grey.shade300
-      ),
+      theme: MyThemeData.principal()
     );
   }
+}
+
+class MyThemeData {
+  static ThemeData principal()=> 
+  ThemeData(
+    scaffoldBackgroundColor: Colors.grey.shade300,
+
+    colorScheme: ColorScheme.light(
+      primary: Colors.green,
+      primaryVariant: Colors.green.shade300,
+    ),
+    
+    primaryColor: Colors.green
+  );
+
 }

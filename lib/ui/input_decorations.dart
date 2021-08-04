@@ -6,15 +6,16 @@ class InputDecorations {
     required String labelText, 
     required String hintText,
     required Widget prefixIcon,
+    required Color borderColor
   })=> InputDecoration(
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: Colors.deepPurple,
+        color: borderColor,
       )
     ),
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(
-        color: Colors.deepPurple,
+        color: borderColor,
         width: 2
       )
     ),
@@ -24,16 +25,20 @@ class InputDecorations {
   );
 
 
-  static InputDecoration loginInputMail()=> loginInputDeco(
+  static InputDecoration loginInputMail(BuildContext context)=> loginInputDeco(
     labelText: 'Correo',
     hintText: 'ejemplo@mail.com',
-    prefixIcon: Icon( Icons.email, color: Colors.deepPurple )
+    prefixIcon: Icon( Icons.email, 
+      color: Theme.of(context).colorScheme.primary),
+    borderColor: Theme.of(context).colorScheme.primary
   );
 
-  static InputDecoration loginInputPass()=> loginInputDeco(
+  static InputDecoration loginInputPass(BuildContext context)=> loginInputDeco(
     labelText: 'Contraseña', 
     hintText: '******', 
-    prefixIcon: Icon( Icons.lock_outline, color: Colors.deepPurple )
+    prefixIcon: Icon( Icons.lock_outline, 
+      color: Theme.of(context).colorScheme.primary ),
+    borderColor: Theme.of(context).colorScheme.primary
   );
 
 }
