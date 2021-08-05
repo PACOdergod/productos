@@ -3,32 +3,113 @@ import 'package:flutter/material.dart';
 class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: Container(
-        width: double.infinity,
-        height: 300,
-        decoration: _cardDecoration(),
-        child: Stack(
-          children: [
-            _BackImage()
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      height: 350,
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            offset: Offset(0, 7)
+          )
+        ]
+      ),
+
+      child: Stack(
+        children: [
+
+          _BackImage(),
+
+          Positioned(
+            child: _Description(),
+            bottom: 0,
+          )
+
+        ],
       ),
     );
   }
 
-  BoxDecoration _cardDecoration() {
-    return BoxDecoration(
-      color: Colors.red,
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black26,
-          blurRadius: 10,
-          offset: Offset(0, 7)
+}
+
+class _Description extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 65,
+      width: MediaQuery.of(context).size.width-40,
+
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
         )
-      ]
+      ),
+      
+      child: Row(
+        children: [
+
+          _Name(),
+
+          _Price(),
+
+        ],
+      ),
+
+    );
+  }
+}
+
+class _Name extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: ( MediaQuery.of(context).size.width-40 )/2 + 50,
+      alignment: Alignment.center,
+
+      child: Text( 'Disco duro',
+        style: TextStyle( 
+          color: Colors.white, 
+          fontWeight: FontWeight.bold,
+          fontSize: 20
+        ),
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
+
+class _Price extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: ( MediaQuery.of(context).size.width-40 )/2 - 50,
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(horizontal: 10),
+
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: Text( '\$100',
+          style: TextStyle( 
+            color: Colors.white, 
+            fontWeight: FontWeight.bold,
+            fontSize: 20
+          ),
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
     );
   }
 }
