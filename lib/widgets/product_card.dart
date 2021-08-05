@@ -3,33 +3,38 @@ import 'package:flutter/material.dart';
 class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      height: 350,
+    return GestureDetector(
+      onTap: ()=> Navigator.pushNamed(context, 'product'),
 
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 10,
-            offset: Offset(0, 7)
-          )
-        ]
-      ),
 
-      child: Stack(
-        children: [
-
-          _BackImage(),
-
-          Positioned(
-            child: _Description(),
-            bottom: 0,
-          )
-
-        ],
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        height: 350,
+    
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              offset: Offset(0, 7)
+            )
+          ]
+        ),
+    
+        child: Stack(
+          children: [
+    
+            _BackImage(),
+    
+            Positioned(
+              child: _Description(),
+              bottom: 0,
+            )
+    
+          ],
+        ),
       ),
     );
   }
@@ -54,11 +59,8 @@ class _Description extends StatelessWidget {
       
       child: Row(
         children: [
-
           _Name(),
-
           _Price(),
-
         ],
       ),
 

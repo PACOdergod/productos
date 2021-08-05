@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (_)=> LoginPage(),
         'home':  (_)=> HomePage(),
-        'loading': (_)=> LoadingPage()
+        'loading': (_)=> LoadingPage(),
+        'product': (_)=> ProductPage()
       },
 
       theme: MyThemeData.principal()
