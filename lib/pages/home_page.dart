@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productos_app/main.dart';
 import 'package:productos_app/widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,13 +13,19 @@ class HomePage extends StatelessWidget {
       body:ListView.builder(
         itemCount: 10,
         itemBuilder: ( BuildContext context, int index ) {
-          return ProductCard();
+
+          return GestureDetector(
+            child: ProductCard(),
+            //TODO: crear la pagina de descripcion
+            onTap: ()=> Navigator.pushNamed(context, Rutas.product),
+          );
+          
         },
       ),
 
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: (){},
+        onPressed: ()=> Navigator.pushNamed(context, Rutas.product),
       ),
 
    );

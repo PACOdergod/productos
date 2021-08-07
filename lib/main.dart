@@ -9,39 +9,49 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Productos',
       
-      initialRoute: 'home',
+      initialRoute: 'product',
       routes: {
-        'login': (_)=> LoginPage(),
-        'home':  (_)=> HomePage(),
-        'loading': (_)=> LoadingPage(),
-        'product': (_)=> ProductPage()
+        Rutas.login   : (_)=> LoginPage(),
+        Rutas.loading : (_)=> LoadingPage(),
+        Rutas.home    : (_)=> HomePage(),
+        Rutas.product : (_)=> ProductPage()
       },
 
-      theme: MyThemeData.principal()
+      theme: _myTema()
+
+    );
+  }
+
+  ThemeData _myTema() {
+    return ThemeData(
+      scaffoldBackgroundColor: Colors.grey.shade300,
+
+      colorScheme: ColorScheme.light(
+        primary: Colors.green,
+        primaryVariant: Colors.green.shade300,
+      ),
+      primaryColor: Colors.green,
+
+      appBarTheme: AppBarTheme(
+        elevation: 0,
+        color: Colors.teal
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: Colors.pink,
+        elevation: 0
+      )
     );
   }
 }
 
-class MyThemeData {
+class Rutas {
+  static String home = 'home';
+  static String loading = 'loading';
+  static String product = 'product';
+  static String login = 'login';
+}
 
-  static ThemeData principal()=> 
-  ThemeData(
-    scaffoldBackgroundColor: Colors.grey.shade300,
-
-    colorScheme: ColorScheme.light(
-      primary: Colors.green,
-      primaryVariant: Colors.green.shade300,
-    ),
-    primaryColor: Colors.green,
-
-    appBarTheme: AppBarTheme(
-      elevation: 0,
-      color: Colors.teal
-    ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.pink,
-      elevation: 0
-    )
-  );
-
+class MyAssets {
+  static String loading = 'assets/jar-loading.gif';
+  static String noImage = 'assets/no-image.png';
 }

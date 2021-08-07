@@ -5,13 +5,11 @@ class InputDecorations {
   static InputDecoration loginInputDeco({
     required String labelText, 
     required String hintText,
-    required Widget prefixIcon,
+    Widget? prefixIcon,
     required Color borderColor
   })=> InputDecoration(
     enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: borderColor,
-      )
+      borderSide: BorderSide( color: borderColor )
     ),
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(
@@ -40,5 +38,6 @@ class InputDecorations {
       color: Theme.of(context).colorScheme.primary ),
     borderColor: Theme.of(context).colorScheme.primary
   );
+
 
 }
