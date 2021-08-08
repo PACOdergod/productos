@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productos_app/main.dart';
 import 'package:productos_app/models/models.dart';
 
 class ProductCard extends StatelessWidget {
@@ -13,7 +14,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      height: 350,
+      // height: 350,
 
       decoration: BoxDecoration(
         color: Colors.white,
@@ -157,10 +158,15 @@ class _BackImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        height: 300,
-        child: FadeInImage(
-          placeholder: AssetImage('assets/jar-loading.gif'),
-          image: NetworkImage(urlImg!),
+        constraints: BoxConstraints(
+          minHeight: 300
+        ),
+
+        child: urlImg==null
+        ? Image.asset(MyAssets.noImage, fit: BoxFit.cover,)
+        : FadeInImage(
+          placeholder: AssetImage( MyAssets.loading ), 
+          image: NetworkImage(this.urlImg!),
           fit: BoxFit.cover,
         )
       ),

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:productos_app/main.dart';
+import 'package:productos_app/services/services.dart';
 
 class NewProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final productService = Provider.of<ProductService>(context, listen: false);
+    
     return Scaffold(
 
       appBar: AppBar(
@@ -21,7 +27,7 @@ class NewProductPage extends StatelessWidget {
         child: Column(
           children: [
       
-            _ProductImage(),
+            _ProductImage(productService.selectedProduct.picture),
 
             _Campos()
       
@@ -126,19 +132,26 @@ class _Campos extends StatelessWidget {
 }
 
 class _ProductImage extends StatelessWidget {
+  const _ProductImage(this.urlImg);
+
+  final String? urlImg;
+
   @override
   Widget build(BuildContext context) {
 
     return Container(
-      height: MediaQuery.of(context).size.height*0.4,
+      
       width: double.infinity,
       color: Colors.white,
 
-      child: FadeInImage(
+      child: urlImg==null
+      ? Image.asset(MyAssets.noImage, fit: BoxFit.cover,)
+      : FadeInImage(
         placeholder: AssetImage( MyAssets.loading ), 
-        image: NetworkImage('https://via.placeholder.com/400x300'),
+        image: NetworkImage(this.urlImg!),
         fit: BoxFit.cover,
-      ),
+      )
+      
     );
   }
 }

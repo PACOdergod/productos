@@ -34,7 +34,11 @@ class HomePage extends StatelessWidget {
               product: productService.products[index],
             ),
             //TODO: crear la pagina de descripcion
-            onTap: ()=> Navigator.pushNamed(context, Rutas.product)
+            onTap: (){
+              productService.selectedProduct = 
+                productService.products[index].copy();
+              Navigator.pushNamed(context, Rutas.product);
+            }
           );
           
         },
