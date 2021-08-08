@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         Rutas.login   : (_)=> LoginPage(),
         Rutas.loading : (_)=> LoadingPage(),
         Rutas.home    : (_)=> HomePage(),
-        Rutas.product : (_)=> ProductPage()
+        Rutas.product : (_)=> NewProductPage()
       },
 
       theme: _myTema()
@@ -22,26 +22,27 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  ThemeData _myTema() {
-    return ThemeData(
-      scaffoldBackgroundColor: Colors.grey.shade300,
+}
 
-      colorScheme: ColorScheme.light(
-        primary: Colors.green,
-        primaryVariant: Colors.green.shade300,
-      ),
-      primaryColor: Colors.green,
+ThemeData _myTema() {
+  return ThemeData(
+    scaffoldBackgroundColor: Colors.grey.shade300,
 
-      appBarTheme: AppBarTheme(
-        elevation: 0,
-        color: Colors.teal
-      ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: Colors.pink,
-        elevation: 0
-      )
-    );
-  }
+    colorScheme: ColorScheme.light(
+      primary: Colors.green,
+      primaryVariant: Colors.green.shade300,
+    ),
+    primaryColor: Colors.green,
+
+    appBarTheme: AppBarTheme(
+      elevation: 0,
+      color: Colors.teal
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Colors.pink,
+      elevation: 0
+    )
+  );
 }
 
 class Rutas {

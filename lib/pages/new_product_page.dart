@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:productos_app/main.dart';
 
-class ProductPage extends StatelessWidget {
+class NewProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
