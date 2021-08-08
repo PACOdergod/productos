@@ -7,12 +7,14 @@ class Product {
     required this.name,
     required this.price,
     this.picture,
+    this.id
   });
 
   int cantidad;
   String name;
   double price;
   String? picture;
+  String? id;
 
   factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
 
@@ -31,4 +33,5 @@ class Product {
     "picture": picture,
     "price": price,
   };
+
 }

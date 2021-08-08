@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:productos_app/pages/pages.dart';
+import 'package:productos_app/services/services.dart';
+import 'package:provider/provider.dart';
  
-void main() => runApp(MyApp());
+void main() => runApp(AppState());
+
+class AppState extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ProductService() )
+      ],
+      child: MyApp(),
+    );
+  }
+}
  
 class MyApp extends StatelessWidget {
   @override
@@ -9,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Productos',
       
-      initialRoute: 'product',
+      initialRoute: Rutas.home,
       routes: {
         Rutas.login   : (_)=> LoginPage(),
         Rutas.loading : (_)=> LoadingPage(),
