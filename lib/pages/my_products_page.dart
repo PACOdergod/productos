@@ -6,7 +6,7 @@ import 'package:productos_app/pages/pages.dart';
 import 'package:productos_app/services/services.dart';
 import 'package:productos_app/widgets/widgets.dart';
 
-class HomePage extends StatelessWidget {
+class MyProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Productos'),
+        title: Text('Mis productos'),
         actions: [
           IconButton(
             onPressed: ()=> Navigator.pushNamed(context, Rutas.product),

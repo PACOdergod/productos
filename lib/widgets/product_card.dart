@@ -68,7 +68,7 @@ class _Description extends StatelessWidget {
 
 
     if ( cantidad > 5 ) backColor = Colors.green;
-    else if( cantidad > 0 ) backColor = Colors.yellow.shade600;
+    else if( cantidad > 0 ) backColor = Colors.yellow.shade700;
     else if( cantidad==0 ) backColor = Colors.red;
 
     return Container(
@@ -159,11 +159,11 @@ class _BackImage extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Container(
         constraints: BoxConstraints(
-          minHeight: 300
+          minHeight: 300,
         ),
 
         child: urlImg==null
-        ? Image.asset(MyAssets.noImage, fit: BoxFit.cover,)
+        ? Image.asset(MyAssets.noImage, fit: BoxFit.cover)
         : FadeInImage(
           placeholder: AssetImage( MyAssets.loading ), 
           image: NetworkImage(this.urlImg!),
