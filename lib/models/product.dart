@@ -41,4 +41,8 @@ class Product {
     picture: this.picture,
     id: this.id
   );
+
+  static Product empty()=> Product(
+    cantidad: 0, name: '', price: 0
+  );
 }

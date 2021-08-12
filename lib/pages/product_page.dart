@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:productos_app/providers/product_form_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:image_picker/image_picker.dart';
+
 import 'package:productos_app/main.dart';
+import 'package:productos_app/models/product.dart';
+import 'package:productos_app/providers/product_form_provider.dart';
 import 'package:productos_app/services/services.dart';
 
 class ProductPage extends StatelessWidget {
@@ -15,22 +20,19 @@ class ProductPage extends StatelessWidget {
     
     return ChangeNotifierProvider(
       create: (_)=> ProductFormProvider(productService.selectedProduct),
-      child: _ProductPageBody(productService: productService),
+      child: _ProductPageBody(),
     );
   }
 
 }
 
 class _ProductPageBody extends StatelessWidget {
-  const _ProductPageBody({
-    Key? key,
-    required this.productService,
-  }) : super(key: key);
-
-  final ProductService productService;
 
   @override
   Widget build(BuildContext context) {
+
+    final productService = Provider.of<ProductService>(context);
+
     return Scaffold(
 
       appBar: AppBar(
@@ -38,7 +40,20 @@ class _ProductPageBody extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.camera_alt_outlined),
-            onPressed: (){}, 
+            onPressed: () async {
+              final _picker = new ImagePicker();
+              var _pickedFile = await _picker.pickImage(
+                source: ImageSource.camera,
+                imageQuality: 100
+              );
+
+              if (_pickedFile == null) return;
+
+              productService.updateProductImage(_pickedFile.path);
+
+              _pickedFile = null;
+              
+            },
           )
         ],
       ),
@@ -49,7 +64,13 @@ class _ProductPageBody extends StatelessWidget {
       
             _ProductImage(productService.selectedProduct.picture),
 
-            _Campos()
+            _Campos(),
+
+            SizedBox( height: 20 ),
+
+            _Guardar(),
+
+            SizedBox( height: 20 ),
       
           ],
         ),
@@ -62,17 +83,8 @@ class _Campos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final productForm = Provider.of<ProductFormProvider>(context, listen: false);
+    final productForm = Provider.of<ProductFormProvider>(context);
     final product = productForm.product;
-
-    var boxDecoration = BoxDecoration(
-      border: Border.all(
-        color: Theme.of(context).colorScheme.primary,
-        width: 2
-      ),
-      borderRadius: BorderRadius.circular(15),
-      color: Colors.white,
-    );
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -85,24 +97,7 @@ class _Campos extends StatelessWidget {
 
             SizedBox( height: 10 ),
 
-            Container(
-              decoration: boxDecoration,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-
-              child: TextFormField(
-                initialValue: product.name,
-                onChanged: (value)=> product.name = value,
-                validator: (value){
-                  if(value==null || value.length<1) 
-                    return 'El nombre es obligatorio';
-                },
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: 'Produto', 
-                  hintText: 'Nombre', 
-                ),
-              ),
-            ),
+            _Nombre( product: product),
 
             SizedBox( height: 10 ),
 
@@ -110,69 +105,133 @@ class _Campos extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
-                Container(
-                  decoration: boxDecoration,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  width: (MediaQuery.of(context).size.width-40)/2 -10,
+                _Precio( product: product),
 
-                  child: TextFormField(
-                    initialValue: product.price.toString(),
-                    onChanged: (value){
-                      if(double.tryParse(value) == null)product.price = 0;
-                      else product.price = double.parse(value);
-                    },
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp(r'^(\d+)?\.?\d{0,2}')
-                      )
-                    ],
-
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: 'Precio', 
-                      hintText: '\$99', 
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-
-                Container(
-                  decoration: boxDecoration,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  width: (MediaQuery.of(context).size.width-40)/2 -10,
-
-                  child: TextFormField(
-                    initialValue: product.cantidad.toString(),
-                    onChanged: (value){
-                      if(double.tryParse(value) == null)product.cantidad = 0;
-                      else product.cantidad = int.parse(value);
-                    },
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp(r'^(\d+)?\.?\d{0,2}')
-                      )
-                    ],
-
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: 'Cantidad', 
-                    ),
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
+                _Cantidad( product: product),
 
               ],
             ),
-
-            SizedBox( height: 30 ),
-
-            _Guardar()
-
           ],
         )
       ),
     );
 
+  }
+}
+
+BoxDecoration _cajaDeco(BuildContext context)=>
+  BoxDecoration(
+    border: Border.all(
+      color: Theme.of(context).colorScheme.primary,
+      width: 2
+    ),
+    borderRadius: BorderRadius.circular(15),
+    color: Colors.white,
+  );
+
+class _Nombre extends StatelessWidget {
+  const _Nombre({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: _cajaDeco(context),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+
+      child: TextFormField(
+        initialValue: product.name,
+        onChanged: (value)=> product.name = value,
+        validator: (value){
+          if(value==null || value.length<1) 
+            return 'El nombre es obligatorio';
+        },
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: 'Produto', 
+          hintText: 'Nombre', 
+        ),
+      ),
+    );
+  }
+}
+
+class _Precio extends StatelessWidget {
+  const _Precio({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: _cajaDeco(context),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      width: (MediaQuery.of(context).size.width-40)/2 -10,
+
+      child: TextFormField(
+        initialValue: product.price.toString(),
+        onChanged: (value){
+          if(double.tryParse(value) == null)product.price = 0;
+          else product.price = double.parse(value);
+        },
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(
+            RegExp(r'^(\d+)?\.?\d{0,2}')
+          )
+        ],
+
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: 'Precio', 
+          hintText: '\$99', 
+        ),
+        keyboardType: TextInputType.number,
+      ),
+    );
+  }
+}
+
+class _Cantidad extends StatelessWidget {
+  const _Cantidad({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: _cajaDeco(context),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      width: (MediaQuery.of(context).size.width-40)/2 -10,
+
+      child: TextFormField(
+        initialValue: product.cantidad.toString(),
+        onChanged: (value){
+          if(double.tryParse(value) == null)product.cantidad = 0;
+          else product.cantidad = int.parse(value);
+        },
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(
+            RegExp(r'^(\d+)?\.?\d{0,2}')
+          )
+        ],
+
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: 'Cantidad', 
+        ),
+        keyboardType: TextInputType.number,
+      ),
+    );
   }
 }
 
@@ -187,11 +246,16 @@ class _Guardar extends StatelessWidget {
     return MaterialButton(
       child: Text('Guardar'),
       color: Theme.of(context).colorScheme.secondary,
-      elevation: 0,
-      onPressed: (){
+      onPressed: () async {
         if (!productForm.isValid()) return;
 
+        Navigator.pushNamed(context, Rutas.loadingProduct);
+        
+        final imageUrl = await productService.uploadImage();
+        if(imageUrl != null) productForm.product.picture = imageUrl;
+
         productService.saveOrCreate(productForm.product);
+
       }
     );
   }
@@ -206,18 +270,27 @@ class _ProductImage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      
       width: double.infinity,
       color: Colors.white,
-
-      child: urlImg==null
-      ? Image.asset(MyAssets.noImage, fit: BoxFit.cover,)
-      : FadeInImage(
-        placeholder: AssetImage( MyAssets.loading ), 
-        image: NetworkImage(this.urlImg!),
-        fit: BoxFit.cover,
-      )
-      
+      child: getImage(urlImg)
     );
   }
+}
+
+getImage(String? url){
+
+  if (url == null)
+    return Image.asset(MyAssets.noImage, fit: BoxFit.cover);
+
+  if(url.startsWith('http'))
+    return FadeInImage(
+      placeholder: AssetImage( MyAssets.loading ), 
+      image: NetworkImage(url),
+      fit: BoxFit.cover,
+    );
+  
+  return Image.file(
+    File(url),
+    fit: BoxFit.cover,
+  );
 }

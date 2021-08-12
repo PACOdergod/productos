@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productos_app/models/models.dart';
 import 'package:provider/provider.dart';
 
 import 'package:productos_app/main.dart';
@@ -20,7 +21,10 @@ class MyProductsPage extends StatelessWidget {
         title: Text('Mis productos'),
         actions: [
           IconButton(
-            onPressed: ()=> Navigator.pushNamed(context, Rutas.product),
+            onPressed: (){
+              productService.selectedProduct = Product.empty();
+              Navigator.pushNamed(context, Rutas.product);
+            },
             icon: Icon(Icons.add),
           )
         ],
@@ -42,7 +46,7 @@ class MyProductsPage extends StatelessWidget {
               title: Text('Mis productos'),
               onTap: (){
                  Navigator.pop(context); // close the drawer
-                 Navigator.pushReplacementNamed(context, Rutas.home);
+                 Navigator.pushReplacementNamed(context, Rutas.myProducts);
               },
             ),
 

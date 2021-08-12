@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Rutas.login   : (_)=> LoginPage(),
         Rutas.loading : (_)=> LoadingPage(),
+        Rutas.loadingProduct : (_)=> LoadingProductPage(),
         Rutas.home    : (_)=> HomePage(),
         Rutas.product : (_)=> ProductPage(),
         Rutas.myProducts : (_)=> MyProductsPage() 
@@ -63,6 +64,7 @@ var _myTema = ThemeData(
 class Rutas {
   static String home = 'home';
   static String loading = 'loading';
+  static String loadingProduct = 'loadingProduct';
   static String product = 'product';
   static String login = 'login';
   static String myProducts = 'myProducts';
